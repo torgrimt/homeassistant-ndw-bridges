@@ -1,0 +1,7 @@
+{
+  "name": "NDW Dutch Bridges",
+  "render_readme": true,
+  "type": "integration",
+  "iot_class": "Cloud Polling",
+  "hacs": "1.6.0"
+}
