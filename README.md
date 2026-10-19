@@ -1,3 +1,5 @@
+![NDW Dutch Bridges Logo](logo.png)
+
 # NDW Dutch Bridges for Home Assistant
 
 A custom Home Assistant integration structured as a HACS-compatible repository. This integration monitors moveable bridges (open/closed status) in the Netherlands using open data from the Dutch National Road Data Portal (NDW - Nationaal Dataportaal Wegverkeer) without requiring any API keys.
@@ -39,3 +41,7 @@ A custom Home Assistant integration structured as a HACS-compatible repository. 
 ## Advanced Usage
 
 To find bridge IDs, you can download the NDW feed (`https://opendata.ndw.nu/actueel_beeld.xml.gz`), extract it, and search for `bridgeSwingInOperation` events to find `externalLocationCode` identifiers for bridges you care about.
+
+## Credits
+
+Denne integrasjonen er laget av Jules. (This integration is created by Jules).
