@@ -44,7 +44,10 @@ class DutchBridgeBinarySensor(CoordinatorEntity, BinarySensorEntity):
     @property
     def is_on(self):
         """Return true if the bridge is open (swing in operation)."""
-        open_bridges = self.coordinator.data or set()
+        if isinstance(self.coordinator.data, dict):
+            open_bridges = self.coordinator.data.get("bridges_in_operation", set())
+        else:
+            open_bridges = self.coordinator.data or set()
         return self._bridge_id in open_bridges
 
     @property
