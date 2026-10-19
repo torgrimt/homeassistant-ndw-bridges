@@ -3,6 +3,7 @@ import logging
 from homeassistant.components.binary_sensor import BinarySensorEntity, BinarySensorDeviceClass
 from homeassistant.config_entries import ConfigEntry
 from homeassistant.core import HomeAssistant
+from homeassistant.helpers.device_registry import DeviceInfo
 from homeassistant.helpers.update_coordinator import CoordinatorEntity
 
 from .const import DOMAIN, CONF_BRIDGE_ID, CONF_NAME
@@ -12,8 +13,8 @@ _LOGGER = logging.getLogger(__name__)
 
 async def async_setup_entry(hass: HomeAssistant, entry: ConfigEntry, async_add_entities):
     """Set up the NDW Dutch Bridges binary sensor."""
-    # Use the shared coordinator
-    coordinator = hass.data[DOMAIN]["coordinator"]
+    # Use the mapped coordinator
+    coordinator = hass.data[DOMAIN][entry.entry_id]
     bridge_id = entry.data[CONF_BRIDGE_ID]
 
     # Read name from options, fallback to data
@@ -24,13 +25,21 @@ async def async_setup_entry(hass: HomeAssistant, entry: ConfigEntry, async_add_e
 class DutchBridgeBinarySensor(CoordinatorEntity, BinarySensorEntity):
     """Representation of a Dutch Bridge binary sensor."""
 
+    _attr_has_entity_name = True
+
     def __init__(self, coordinator: DutchBridgesDataUpdateCoordinator, bridge_id: str, name: str):
         """Initialize the sensor."""
         super().__init__(coordinator)
         self._bridge_id = bridge_id
-        self._attr_name = name
+        self._attr_name = "State"
         self._attr_unique_id = f"dutch_bridge_{self._bridge_id}"
         self._attr_device_class = BinarySensorDeviceClass.DOOR
+        self._attr_device_info = DeviceInfo(
+            identifiers={(DOMAIN, self._bridge_id)},
+            name=name,
+            manufacturer="NDW",
+            model="Dutch Bridge",
+        )
 
     @property
     def is_on(self):

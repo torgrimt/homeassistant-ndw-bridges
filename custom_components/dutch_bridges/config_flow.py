@@ -1,12 +1,22 @@
 import voluptuous as vol
 from homeassistant import config_entries
 from homeassistant.core import callback
+from homeassistant.helpers import selector
 
-from .const import DOMAIN, CONF_BRIDGE_ID, CONF_NAME
+from .const import DOMAIN, CONF_BRIDGE_ID, CONF_NAME, KNOWN_BRIDGES
 
 DATA_SCHEMA = vol.Schema({
-    vol.Required(CONF_BRIDGE_ID): str,
-    vol.Optional(CONF_NAME, default="Dutch Bridge"): str,
+    vol.Required(CONF_BRIDGE_ID): selector.SelectSelector(
+        selector.SelectSelectorConfig(
+            options=[
+                selector.SelectOptionDict(value=k, label=v)
+                for k, v in KNOWN_BRIDGES.items()
+            ],
+            custom_value=True,
+            mode=selector.SelectSelectorMode.DROPDOWN,
+        )
+    ),
+    vol.Optional(CONF_NAME): str,
 })
 
 
@@ -27,7 +37,13 @@ class DutchBridgesConfigFlow(config_entries.ConfigFlow, domain=DOMAIN):
             await self.async_set_unique_id(bridge_id)
             self._abort_if_unique_id_configured()
 
-            return self.async_create_entry(title=user_input[CONF_NAME], data=user_input)
+            # Assign name automatically if not specified
+            name = user_input.get(CONF_NAME)
+            if not name:
+                name = KNOWN_BRIDGES.get(bridge_id, f"Bridge {bridge_id}")
+                user_input[CONF_NAME] = name
+
+            return self.async_create_entry(title=name, data=user_input)
 
         return self.async_show_form(
             step_id="user",

@@ -3,9 +3,9 @@
     "step": {
       "user": {
         "title": "Stel NDW Nederlandse Brug in",
-        "description": "Voer de brug-ID in (bijv. NLLRU002120533900259) om de status te monitoren.",
+        "description": "Selecteer de brug om de status te monitoren.",
         "data": {
-          "bridge_id": "Brug ID (External Location Code)",
+          "bridge_id": "Brug",
           "name": "Aangepaste Naam"
         }
       }

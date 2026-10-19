@@ -31,9 +31,10 @@ class DutchBridgesDataUpdateCoordinator(DataUpdateCoordinator):
         """Fetch data from NDW."""
         try:
             session = async_get_clientsession(self.hass)
-            async with session.get(NDW_URL) as response:
-                response.raise_for_status()
-                compressed_data = await response.read()
+            async with asyncio.timeout(10):
+                async with session.get(NDW_URL) as response:
+                    response.raise_for_status()
+                    compressed_data = await response.read()
 
             data = await asyncio.to_thread(self._parse_xml, compressed_data)
             self.bridge_states = data

@@ -3,9 +3,9 @@
     "step": {
       "user": {
         "title": "Set up NDW Dutch Bridge",
-        "description": "Enter the bridge ID (e.g., NLLRU002120533900259) to monitor its status.",
+        "description": "Select the bridge to monitor its status.",
         "data": {
-          "bridge_id": "Bridge ID (External Location Code)",
+          "bridge_id": "Bridge",
           "name": "Custom Name"
         }
       }
