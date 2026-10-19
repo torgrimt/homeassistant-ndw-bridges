@@ -27,5 +27,12 @@
         }
       }
     }
+  },
+  "entity": {
+    "sensor": {
+      "next_opening": {
+        "name": "Next Opening"
+      }
+    }
   }
 }
