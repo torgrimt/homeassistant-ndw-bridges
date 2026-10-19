@@ -1,0 +1,31 @@
+{
+  "config": {
+    "step": {
+      "user": {
+        "title": "Stel NDW Nederlandse Brug in",
+        "description": "Voer de brug-ID in (bijv. NLLRU002120533900259) om de status te monitoren.",
+        "data": {
+          "bridge_id": "Brug ID (External Location Code)",
+          "name": "Aangepaste Naam"
+        }
+      }
+    },
+    "error": {
+      "cannot_connect": "Verbinding mislukt",
+      "invalid_auth": "Ongeldige authenticatie",
+      "unknown": "Onverwachte fout"
+    },
+    "abort": {
+      "already_configured": "Apparaat is al geconfigureerd"
+    }
+  },
+  "options": {
+    "step": {
+      "init": {
+        "data": {
+          "name": "Aangepaste Naam"
+        }
+      }
+    }
+  }
+}

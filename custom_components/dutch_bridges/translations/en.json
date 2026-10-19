@@ -1,0 +1,31 @@
+{
+  "config": {
+    "step": {
+      "user": {
+        "title": "Set up NDW Dutch Bridge",
+        "description": "Enter the bridge ID (e.g., NLLRU002120533900259) to monitor its status.",
+        "data": {
+          "bridge_id": "Bridge ID (External Location Code)",
+          "name": "Custom Name"
+        }
+      }
+    },
+    "error": {
+      "cannot_connect": "Failed to connect",
+      "invalid_auth": "Invalid authentication",
+      "unknown": "Unexpected error"
+    },
+    "abort": {
+      "already_configured": "Device is already configured"
+    }
+  },
+  "options": {
+    "step": {
+      "init": {
+        "data": {
+          "name": "Custom Name"
+        }
+      }
+    }
+  }
+}
