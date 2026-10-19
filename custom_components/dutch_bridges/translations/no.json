@@ -1,0 +1,38 @@
+{
+  "config": {
+    "step": {
+      "user": {
+        "title": "Sett opp NDW Nederlandsk Bro",
+        "description": "Velg broen for å overvåke statusen.",
+        "data": {
+          "bridge_id": "Bro",
+          "name": "Egendefinert Navn"
+        }
+      }
+    },
+    "error": {
+      "cannot_connect": "Tilkobling mislyktes",
+      "invalid_auth": "Ugyldig autentisering",
+      "unknown": "Uventet feil"
+    },
+    "abort": {
+      "already_configured": "Enheten er allerede konfigurert"
+    }
+  },
+  "options": {
+    "step": {
+      "init": {
+        "data": {
+          "name": "Egendefinert Navn"
+        }
+      }
+    }
+  },
+  "entity": {
+    "sensor": {
+      "next_opening": {
+        "name": "Neste Åpning"
+      }
+    }
+  }
+}

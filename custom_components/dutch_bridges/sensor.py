@@ -32,6 +32,7 @@ class DutchBridgeNextOpeningSensor(CoordinatorEntity, SensorEntity):
         self._attr_translation_key = "next_opening"
         self._attr_unique_id = f"dutch_bridge_next_opening_{self._bridge_id}"
         self._attr_device_class = "timestamp"
+        self._attr_icon = "mdi:bridge"
         self._attr_device_info = DeviceInfo(
             identifiers={(DOMAIN, self._bridge_id)},
             name=name,
