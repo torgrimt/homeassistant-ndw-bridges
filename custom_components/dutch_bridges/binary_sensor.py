@@ -34,6 +34,7 @@ class DutchBridgeBinarySensor(CoordinatorEntity, BinarySensorEntity):
         self._attr_name = "State"
         self._attr_unique_id = f"dutch_bridge_{self._bridge_id}"
         self._attr_device_class = BinarySensorDeviceClass.DOOR
+        self._attr_icon = "mdi:bridge"
         self._attr_device_info = DeviceInfo(
             identifiers={(DOMAIN, self._bridge_id)},
             name=name,
