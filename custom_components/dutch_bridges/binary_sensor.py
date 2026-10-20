@@ -33,14 +33,18 @@ class DutchBridgeBinarySensor(CoordinatorEntity, BinarySensorEntity):
         self._bridge_id = bridge_id
         self._attr_name = "State"
         self._attr_unique_id = f"dutch_bridge_{self._bridge_id}"
-        self._attr_device_class = BinarySensorDeviceClass.DOOR
-        self._attr_icon = "mdi:bridge"
+        self._attr_translation_key = "bridge_state"
         self._attr_device_info = DeviceInfo(
             identifiers={(DOMAIN, self._bridge_id)},
             name=name,
             manufacturer="NDW",
             model="Dutch Bridge",
         )
+
+    @property
+    def icon(self) -> str:
+        """Return the icon based on the state."""
+        return "mdi:boom-gate" if self.is_on else "mdi:boom-gate-up"
 
     @property
     def is_on(self):

@@ -33,6 +33,14 @@
       "next_opening": {
         "name": "Neste Åpning"
       }
+    },
+    "binary_sensor": {
+      "bridge_state": {
+        "state": {
+          "off": "Åpen for biltrafikk",
+          "on": "Bruåpning (Stengt for bil)"
+        }
+      }
     }
   }
 }

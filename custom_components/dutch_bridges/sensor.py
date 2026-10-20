@@ -1,6 +1,6 @@
 import logging
 
-from homeassistant.components.sensor import SensorEntity
+from homeassistant.components.sensor import SensorEntity, SensorDeviceClass
 from homeassistant.config_entries import ConfigEntry
 from homeassistant.core import HomeAssistant
 from homeassistant.helpers.device_registry import DeviceInfo
@@ -31,8 +31,8 @@ class DutchBridgeNextOpeningSensor(CoordinatorEntity, SensorEntity):
         self._bridge_id = bridge_id
         self._attr_translation_key = "next_opening"
         self._attr_unique_id = f"dutch_bridge_next_opening_{self._bridge_id}"
-        self._attr_device_class = "timestamp"
-        self._attr_icon = "mdi:bridge"
+        self._attr_device_class = SensorDeviceClass.TIMESTAMP
+        self._attr_icon = "mdi:clock-outline"
         self._attr_device_info = DeviceInfo(
             identifiers={(DOMAIN, self._bridge_id)},
             name=name,
@@ -58,6 +58,10 @@ class DutchBridgeNextOpeningSensor(CoordinatorEntity, SensorEntity):
 
         if isinstance(self.coordinator.data, dict):
             planned_openings = self.coordinator.data.get("planned_openings", {}).get(self._bridge_id, [])
-            attrs["scheduled_openings"] = [dt.isoformat() for dt in planned_openings]
+            attrs["upcoming_openings_count"] = len(planned_openings)
+            attrs["upcoming_openings"] = [dt.isoformat() for dt in planned_openings]
+        else:
+            attrs["upcoming_openings_count"] = 0
+            attrs["upcoming_openings"] = []
 
         return attrs

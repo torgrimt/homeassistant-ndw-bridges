@@ -2,8 +2,9 @@ import asyncio
 import gzip
 import logging
 import xml.etree.ElementTree as ET
-from datetime import datetime, timedelta, timezone
+from datetime import timedelta
 
+import homeassistant.util.dt as dt_util
 from homeassistant.core import HomeAssistant
 from homeassistant.helpers.aiohttp_client import async_get_clientsession
 from homeassistant.helpers.update_coordinator import DataUpdateCoordinator, UpdateFailed
@@ -70,8 +71,8 @@ class DutchBridgesDataUpdateCoordinator(DataUpdateCoordinator):
 
         bridges_in_operation = set()
         planned_openings = {}
-        now = datetime.now(timezone.utc)
-        today = now.date()
+        now = dt_util.utcnow()
+        today = dt_util.now().date()
 
         try:
             xml_data = gzip.decompress(current_compressed_data)
@@ -118,16 +119,15 @@ class DutchBridgesDataUpdateCoordinator(DataUpdateCoordinator):
 
                             if bridge_id and start_time_str:
                                 try:
-                                    # Expected format: 2026-10-20T17:42:00Z
-                                    if start_time_str.endswith("Z"):
-                                        start_time_str = start_time_str[:-1] + "+00:00"
-                                    dt = datetime.fromisoformat(start_time_str)
+                                    dt = dt_util.parse_datetime(start_time_str)
+                                    if dt:
+                                        dt = dt_util.as_utc(dt)
 
-                                    # Filter: must be today and in the future
-                                    if dt.date() == today and dt > now:
-                                        if bridge_id not in planned_openings:
-                                            planned_openings[bridge_id] = []
-                                        planned_openings[bridge_id].append(dt)
+                                        # Filter: must be today and in the future
+                                        if dt_util.as_local(dt).date() == today and dt > now:
+                                            if bridge_id not in planned_openings:
+                                                planned_openings[bridge_id] = []
+                                            planned_openings[bridge_id].append(dt)
                                 except ValueError:
                                     _LOGGER.warning(f"Failed to parse time string: {start_time_str}")
                                     continue

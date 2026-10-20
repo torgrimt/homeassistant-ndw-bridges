@@ -33,6 +33,14 @@
       "next_opening": {
         "name": "Next Opening"
       }
+    },
+    "binary_sensor": {
+      "bridge_state": {
+        "state": {
+          "off": "Open for road traffic",
+          "on": "Bridge open (Ship passing)"
+        }
+      }
     }
   }
 }
